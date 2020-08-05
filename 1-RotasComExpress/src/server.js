@@ -27,7 +27,7 @@ app.get("/pessoa", (req, res) => {
             )
 })
 
-app.get("/FODASE", (req, res) => {
+app.get("/algua", (req, res) => {
     res.send("<h1 style='width:100%;text-align:center;height:90px;background-color:orangered;color:white;' >Essa pagina é dedidada a vontade de morrer que eu tenho<br> obrigado por descobrir</h1>")
 })
 
