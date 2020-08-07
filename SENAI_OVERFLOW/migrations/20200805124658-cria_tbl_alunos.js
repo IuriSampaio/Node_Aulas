@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-     return queryInterface.createTable("usuarios" , {
+     return queryInterface.createTable("alunos" , {
         id    : { 
           type          : Sequelize.INTEGER,
           primaryKey    : true,
@@ -28,12 +28,23 @@ module.exports = {
         email : {
           type          : Sequelize.STRING,
           allownull     : false,
+          unique        : true,
+        },
+        
+        created_at:{
+          type          : Sequelize.DATE,
+          allownull     : false,
+        },
+
+        updated_at:{
+          type          : Sequelize.DATE,
+          allownull     : false,
         }
      })
   },
 
   down: async (queryInterface, Sequelize) => {
 
-     return queryInterface.dropTable('usuarios')
+     return queryInterface.dropTable('alunos')
   }
 };

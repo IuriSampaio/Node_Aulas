@@ -5,9 +5,18 @@ const routes = express.Router()
 
 // instanciando o obj retornado pelo arquivo que faz contato com o banco
 const alunoController = require('./controllers/aluno')
+const postController = require('./controllers/post');
 
+routes.get("/alunos",alunoController.listar)
+
+routes.get("/alunos/:id",alunoController.buscarPorId)
 // no endereço -> localhost:3001/alunos --> será chamado o método store (que faz a inserção no BD)
 routes.post("/alunos", alunoController.store)
 
+routes.get("/home",postController.index)
+
+routes.get("/home/:id",postController.indexById)
+
+routes.post("/home",postController.store)
 // exportando a variavel rotas
 module.exports = routes
