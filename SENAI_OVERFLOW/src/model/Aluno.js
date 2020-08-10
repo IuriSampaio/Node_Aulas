@@ -12,5 +12,9 @@ class Aluno extends Model {
 			sequelize,
 		})
 	}
+	static associete( MODELS ){
+		// um aluno pode fazer varios posts
+		this.hasMany(MODELS.Post,{ foreignKey:"created_aluno_id" })
+	}
 }
 module.exports = Aluno; 

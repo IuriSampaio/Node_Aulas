@@ -5,6 +5,7 @@ module.exports = {
 
 // SELECT  
 	async index ( req , res ) {
+
 		const post = await Post.findAll();
 		if (! post ){	
 			res.send({"erro": "404 NOT FOUND"});
@@ -23,8 +24,13 @@ module.exports = {
 	},
 // INSERT
 	async store ( req, res ) {
-		const { code , photo , text , id_aluno } = req.body;
-		const post = await Post.create({ code , photo , text , id_aluno });
+
+		const token = req.headers.authorization;
+
+		const [ Bearer , created_aluno_id ] =token.split(" ");
+
+		const { title, code , photo , text } = req.body;
+		const post = await Post.create({title, code , photo , text , created_aluno_id });
 		res.send(post);
 	},
 // UPDATE

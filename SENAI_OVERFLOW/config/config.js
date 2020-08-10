@@ -5,6 +5,7 @@ module.exports = {
 	username:  "root",
 	password:  "bcd127",
 	database:  "senai_overflow",
+	logging :   console.log, // mostra oque o sequelize ta fazendo ao criar as migrations
 	define  : {
 		timestamp  : true,
 		underscored: true,
