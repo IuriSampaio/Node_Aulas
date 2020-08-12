@@ -1,5 +1,7 @@
 const { Model , DataTypes } = require("sequelize");
 
+
+
 class Post extends Model {
 	
 	static init( sequelize ){
@@ -10,11 +12,13 @@ class Post extends Model {
 			text    : DataTypes.TEXT,
 		},{
 			sequelize,
+			tableName:"posts",
 		})
 	}
 	static associete( MODELS ){
 		// um post foi feito por um aluno
 		this.belongsTo(MODELS.Aluno,{ foreignKey:"created_aluno_id" })
+		this.hasMany(MODELS.Comentario);
 	}
 }
 

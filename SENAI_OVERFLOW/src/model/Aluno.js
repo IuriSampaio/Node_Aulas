@@ -15,6 +15,7 @@ class Aluno extends Model {
 	static associete( MODELS ){
 		// um aluno pode fazer varios posts
 		this.hasMany(MODELS.Post,{ foreignKey:"created_aluno_id" })
+		this.hasMany(MODELS.Comentario);
 	}
 }
 module.exports = Aluno; 
