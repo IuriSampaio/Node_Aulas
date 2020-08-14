@@ -1,5 +1,6 @@
 const Aluno = require("../model/Aluno");
 const {Op}=require("sequelize");
+const cripto = require("bcryptjs");
 //estas seram as açoes controladas pelo banco 
 
 // objeto contendo as açoes possiveis no banco para a contrução da api
@@ -47,9 +48,12 @@ module.exports = {
         if (aluno){
             return res.status(400).send({"erro": "Aluno já cadastrado"})
         }
+
+        const senhaCripto = await cripto.hash(senha,10)
+
         // se não, ele insere o aluno no banco 
         //INSERT INTO alunos VALUES (ra,nome,email,senhaw)
-        aluno = await Aluno.create({ ra , nome , email , senha });
+        aluno = await Aluno.create({ ra , nome , email , senha:senhaCripto });
 
         // apenas para teste, sera trocado pela inserção no banco 
         res.send(aluno)

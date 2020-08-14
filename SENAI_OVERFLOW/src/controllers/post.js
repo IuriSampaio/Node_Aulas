@@ -1,5 +1,5 @@
 const Post = require("../model/Post");
-
+const Aluno = require("../model/Aluno");
 
 module.exports = {
 
@@ -31,9 +31,7 @@ module.exports = {
 // INSERT
 	async store ( req, res ) {
 
-		const token = req.headers.authorization;
-
-		const [ Bearer , created_aluno_id ] =token.split(" ");
+		const created_aluno_id = req.alunoId;
 
 		const { title, code , photo , text } = req.body;
 		try{
@@ -44,10 +42,11 @@ module.exports = {
 		}
 
 		const post = await Post.create({title, code , photo , text , created_aluno_id });
-		}catch ( err ) {
-			return res.send({erro:"não foi possivel adicionar a postagem =("});
-		}
 		res.send(post);
+		}catch ( err ) {
+			return res.send({erro:"não foi possivel adicionar a postagem =( "+err});
+		}
+		
 	},
 // UPDATE
 	async update ( req , res ) {

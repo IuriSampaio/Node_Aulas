@@ -1,5 +1,7 @@
 const Comentarios = require("../model/Comentarios"); 
 const postagem = require("../model/Post");
+
+
 module.exports = {
 
 	async index ( req , res ) {
@@ -31,9 +33,7 @@ module.exports = {
 	},
 
 	async store ( req , res ) {
-		const token = req.headers.authorization;
-
-		const [ Bearer , aluno_id ] = token.split(" ");
+		const  aluno_id  = req.alunoId;
 		const { postId } = req.params;
 
 		const { text } = req.body;
