@@ -7,7 +7,8 @@ module.exports = ( req,res,next ) => {
 	if ( !auto )
 		res.send(401).send({erro:"token não informado!!!!!!"});
 	
-
+/*  Bearer       728ehqudhd8723dnu8hh327d28hd187dgb2e8o */ //---> assim sera entegregue o beader token
+/*  bearer            token   */ 
 	const [Bearer, token] = auto.split(" ");
 
 	if( !token )
