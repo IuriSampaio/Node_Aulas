@@ -1,10 +1,12 @@
 import React from 'react';
-import Login from './pages/login/index.js';
+import {Login, Cadastro} from './pages/login/index.js';
 import { Conteiner, ConteinerLogin, LogoSenai, ConteinerFoto } from './pages/login/style';
 import { GlobalStyle } from './styles/GlobalStyles.js'
 import img from './assets/img.jpg' 
 
 function App() {
+
+  const [ mostrarForm , setMostrarForm ] = React.useState("login")
   return (
        
       
@@ -14,10 +16,10 @@ function App() {
           <img src={img} alt="foto do senai" />
         </ConteinerFoto>    
         <Conteiner>
-          <ConteinerLogin>
+          <ConteinerLogin>  
             <LogoSenai>SENAI OVERFLOW</LogoSenai>
               <p>Tire a suas duvidas..</p>
-            <Login />
+              {mostrarForm === "login" ? <Login mostrarForm={setMostrarForm} /> :  <Cadastro mostrarForm={setMostrarForm} />}
           </ConteinerLogin>
         </Conteiner>
         

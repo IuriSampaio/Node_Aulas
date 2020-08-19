@@ -1,51 +1,94 @@
 import React from 'react';
+import { api } from '../../services/api';
+import { Form } from './style';
+export const Login = ( props ) => {
+    const [ aluno , setAluno ] = React.useState({
+      email:"",
+      senha:""
+    });
 
-const Login = (  ) => {
-    const [ email , setEmail ] = React.useState("");
-    const [ senha , setSenha ] = React.useState("");
-
-    const handlerEmail = ( e ) => {
-      setEmail(e.target.value);
-    };
-  
-    const handlerSenha = ( e ) => {
-      setSenha(e.target.value);
-    };
-  
-    const entrar = async(  ) => {
-      // REALIZANDO LOGIN ULTILIZANDO A API CONTRUIDA COM NODE NO BACKEND
-      const url = "http://localhost:3001/sessao";
-  
-      const res = await fetch(url, 
-          // DIZENDO QUE VAI SER MÉTODO POST 
-        { method: "POST",
-          // FALANDO QUE VAI SER UM JSON
-          headers:  { 
-                      'Content-Type':'application/json' 
-                    },
-          // CORPO DA REQUISIÇÕA
-          body:JSON.stringify({ 
-                      email,
-                      senha 
-                    })
-        })
-      
-      const json= await res.json()
-      console.log(json)
+    const handlerInput = ( e ) => {
+      setAluno( { ...aluno , [e.target.id] : e.target.value   } );
+      console.log(aluno)
     };
 
-    const cadastrar = (  ) => { };
-  
+    const entrar = async( e ) => {
+      e.preventDefault();
+      try{
+      const res = await api.post("/sessao",aluno)
+        
+        if ( res.status === 201 ){
+          window.alert("logado com sucesso!!");
+        }
+      } catch(err){
+         console.log(err);
+         if( err.response ){
+           return window.alert(err.response.data.erro)  
+         }
+         window.alert("Deu ruim meu pARCEIR")
+      }
+    };
+
     return (
-      <>
-        <input type="email" value={email} onChange={handlerEmail} className="inputLogin" placeholder="digite o seu email..." />
-        <input type="password" placeholder="digite sua senha " value={senha} className="inputLogin" onChange={handlerSenha} />
+      <Form onSubmit={entrar}>
+        <input type="email" value={aluno.email} onChange={handlerInput} className="inputLogin" placeholder="digite o seu email..."  id="email"/>
+        <input type="password" placeholder="digite sua senha " value={aluno.senha} className="inputLogin" onChange={handlerInput} id="senha" />
         <div className="conteinerBtn">
-            <button  onClick={ entrar }>Entre</button>
-            <button  onClick={ cadastrar }>Cadastre-se</button>
+            <button type="submit" >Entre</button>
+            <button type="button" onClick={()=>{
+               props.mostrarForm("registrar");
+            }} >Cadastre-se</button>
         </div>
-      </>
+      </Form>
     );
 }
 
-export default Login;
+
+export const Cadastro = ( props ) => {
+     const [ alunoR , setAlunoR ] = React.useState({
+       ra:"",
+       nome:"",
+       email:"",
+       senha:""
+     });
+
+    const handlerInput = ( e ) => {
+      setAlunoR( { ...alunoR , [e.target.id] : e.target.value   } );
+      console.log(alunoR)
+    };
+
+     const cadastrar = async( e ) => {
+      e.preventDefault();
+      try{
+        const res = await api.post("/alunos",alunoR)
+        
+        if ( res.status === 201 ){
+          window.alert("logado com sucesso!!");
+        }
+      } catch(err){
+         console.log(err);
+         if( err.response ){
+           return window.alert(err.response.data.erro)  
+         }
+         window.alert("Deu ruim meu pARCEIR")
+      }  
+
+      
+       };
+
+     return (
+      <Form onSubmit={cadastrar}>
+        <input type="ra" value={alunoR.ra} onChange={handlerInput} className="inputLogin" placeholder="digite o seu ra..."  id="ra"/>
+        <input type="nome" placeholder="digite seu nome " value={alunoR.nome} className="inputLogin" onChange={handlerInput} id="nome" />
+        
+        <input type="email" value={alunoR.email} onChange={handlerInput} className="inputLogin" placeholder="digite o seu email..."  id="email"/>
+        <input type="password" placeholder="digite sua senha " value={alunoR.senha} className="inputLogin" onChange={handlerInput} id="senha" />
+        <div className="conteinerBtn">
+            <button type="submit" >Cadastrar</button>
+            <button type="button" onClick={()=>{
+               props.mostrarForm("login");
+            }} >Ja tenho cadastro</button>
+        </div>
+      </Form>
+    );
+}

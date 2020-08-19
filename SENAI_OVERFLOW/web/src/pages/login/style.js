@@ -46,3 +46,11 @@ export const ConteinerFoto = styled.div`
         height:100%;
     }
 `;
+
+export const Form = styled.form`
+    width:100%;
+    height:80%;
+    
+
+
+`;
