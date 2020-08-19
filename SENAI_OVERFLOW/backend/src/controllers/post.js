@@ -91,7 +91,7 @@ module.exports = {
 				   if ( deletou ) {
 					   res.status(201).send({post_deletado:id});
 				   } else {
-					   res.status(404).send({post:"não existe"})
+					   res.status(404).send({post:"não deu"})
 				   }
 			} else {
 				res.status(404).send({post:"não existe"})

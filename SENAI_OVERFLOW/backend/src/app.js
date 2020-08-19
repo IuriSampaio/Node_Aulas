@@ -1,6 +1,8 @@
 //importando o express
 const express = require('express')
 
+const cors = require('cors')
+
 // importando arquivo de rotas 
 const rotas = require('./routes')
 
@@ -10,6 +12,7 @@ const rotas = require('./routes')
 // instanciando o express
 const app = express()
 
+app.use(cors());
 // diz para o servidor que ele pode receber respostas do tipo json
 app.use(express.json())
 
