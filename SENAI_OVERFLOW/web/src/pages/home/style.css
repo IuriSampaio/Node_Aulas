@@ -1,0 +1,154 @@
+.conteiner{
+	width:100%;
+	height: 100%;
+}
+.header{
+	width: 100%;
+	height: 70px;
+
+	background-color: var(--degrade-ini);
+
+	display: grid;
+	grid-template-columns: 20% 60% 20%;
+}
+.header div{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.header input{
+	width: 95%;
+	height: 65%;
+
+	border:solid 2px white;
+	background-color: var(--degrade-fim);
+	color:var(--text-in-input);
+	font-size: 24px; 
+	text-align: center;
+	border-radius: 10px;
+}
+
+
+.header p{
+	font-size:20px;
+	letter-spacing: 5px;
+	cursor: pointer;
+	transition: 0.8s;
+    font-family: 'Alfa Slab One', cursive;
+    font-weight: 900;
+    text-shadow:2px 2px 12px #e6b3e6ea;
+    color: var(--cor-fundo) ;
+    width:100%;
+    text-align:center;
+}
+
+
+
+.content{
+	display: grid;
+	grid-template-columns: 20% 60% 20%;
+}
+
+
+.content .profile {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background-color: var(--cor-fundo);
+	border-right: solid 2px var(--text-in-input);
+	margin-top: 10px;
+	color:var(--text-in-input);
+	font-family: 'Roboto', sans-serif;
+}
+
+.profile img{
+	width: 100px;
+	width: 100px;
+	border-radius: 50%;
+	margin: 10px 10px 0px;
+}
+.profile strong{
+	font-size:30px;
+	font-weight:100;
+	font-family: 'Alfa Slab One', cursive;
+
+	margin-top: 20px;
+}
+.profile a{
+	text-decoration: none;
+	color:var(--text-in-background);
+	width: 100%;
+	text-align: center;
+	margin-top: 5px;
+}
+.nada{
+	border-left: 0.0001px solid var(--text-in-input);
+	width: 100%;
+	background-color: var(--cor-fundo);
+}
+.content .feed{
+	width: 100%;
+	height: 100%;
+	margin-top: 10px;
+	display: flex;
+	background-color: var(--cor-fundo);
+}
+
+.card-post{
+	width:70%;
+	font-family: 'Roboto', sans-serif;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 20px auto;
+	color:var(--text-in-input);
+}
+.card-post header, .card-post body, .conteinerComentarios{
+		background-color: var(--cor-fundo-post);
+}
+.card-post header img{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+.card-post header{
+	padding: 20px;
+	display: flex;
+	align-items: center;
+}
+.card-post header strong{
+	margin-left: 10px;
+	width: auto;
+	font-size: 20px;
+
+}
+.card-post p , .card-post span{
+	width: auto;
+	margin-left: 10px;
+}
+
+.card-post body{
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+
+}
+.card-post body h2{
+	font-size:30px;
+	font-weight: 900;
+	margin-bottom: 10px
+}
+.card-post body strong{
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+.card-post footer h5{
+	margin: 10px;
+	font-size: 22px;
+}
+.conteinerComentarios>p{
+	text-align: left;
+	margin: 20px 20px 30px 30px;
+	padding-bottom:20px; 
+}

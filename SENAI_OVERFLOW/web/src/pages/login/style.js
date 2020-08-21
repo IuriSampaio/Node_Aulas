@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components';    
 
 export const Conteiner = styled.div`
-    background-color: #e6b3e6;
+    background-color:var(--cor-fundo);    
     width:100vw;
     height:100vh;
     display:flex;
@@ -15,7 +15,7 @@ export const ConteinerLogin = styled.div`
     max-width: 860px;
     height: auto;
     box-shadow:20px 2px 130px rgba(0,20,20,0.81);
-    background-image: linear-gradient(to left, #732673 , #e6b3e6);
+    background-image: linear-gradient(to left, var(--degrade-ini) , var(--degrade-fim) );
     border-radius:10px;
     padding:20px;
     margin:auto;
@@ -28,7 +28,7 @@ export const LogoSenai = styled.div`
     font-family: 'Alfa Slab One', cursive;
     font-wight: 300;
     text-shadow:2px 2px 12px #e6b3e6ea;
-    color: #732673 ;
+    color: var(--cor-fundo) ;
     width:100%;
     text-align:center;
     padding-bottom:20px;

@@ -2,6 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+:root{
+    --cor-fundo     : #2f2f2f;
+    --cor-fundo-post: #232323;
+    --degrade-ini   : #0066ff;
+    --degrade-fim   : #401020f0;
+    --text-in-input : #abcdef;
+    --text-in-background: lightgreen;
+    --strong-hover  : #910f3aff;
+}
 *{
     margin:0;
     padding:0;
@@ -17,19 +26,19 @@ export const GlobalStyle = createGlobalStyle`
     justify-content:space-around;
     margin-left:auto;
     margin-right:auto;
-    background-color:#910f3a2e;
+    background-color:var(--degrade-ini);
     border: solid white 2px;
 }
 .inputLogin{
-    background-image:linear-gradient(to left, #732673 , #e6b3e6);
+    background-image:linear-gradient(to left, var(--degrade-ini) , var(--cor-fundo) );
     margin-bottom:45px;
     :valid {
         transition:1s;
-        background-image:linear-gradient(to right, #732673 , #e6b3e6);
+        background-image:linear-gradient(to right, var(--degrade-ini) , var(--cor-fundo) );
     }
     :hover {
         transition:1s;
-        background-image:linear-gradient(to left, #732673 , #e6b3e6);
+        background-image:linear-gradient(to left, var(--degrade-ini) , var(--cor-fundo) );
     }
 }
 button{
@@ -42,7 +51,7 @@ button{
     font-size:1.4rem;
     padding-bottom:20px;
     :hover{
-        background-color:#910f3aff;
+        background-color:var(--strong-hover);
         cursor:pointer;
         transition:1s;
     } 

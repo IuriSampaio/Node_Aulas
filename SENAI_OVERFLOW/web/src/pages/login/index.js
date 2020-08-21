@@ -1,18 +1,20 @@
 import React from 'react';
 import { api } from '../../services/api';
+import { Conteiner, ConteinerLogin, LogoSenai, ConteinerFoto } from './style';
 import { Form } from './style';
-export const Login = ( props ) => {
+import img from '../../assets/img.jpg' 
+const LoginForm = ( props ) => {
     const [ aluno , setAluno ] = React.useState({
       email:"",
       senha:""
     });
 
-    const handlerInput = ( e ) => {
+   const handlerInput = ( e ) => {
       setAluno( { ...aluno , [e.target.id] : e.target.value   } );
       console.log(aluno)
     };
 
-    const entrar = async( e ) => {
+   const entrar = async( e ) => {
       e.preventDefault();
       try{
       const res = await api.post("/sessao",aluno)
@@ -44,7 +46,7 @@ export const Login = ( props ) => {
 }
 
 
-export const Cadastro = ( props ) => {
+const CadastroForm = ( props ) => {
      const [ alunoR , setAlunoR ] = React.useState({
        ra:"",
        nome:"",
@@ -57,7 +59,7 @@ export const Cadastro = ( props ) => {
       console.log(alunoR)
     };
 
-     const cadastrar = async( e ) => {
+    const cadastrar = async( e ) => {
       e.preventDefault();
       try{
         const res = await api.post("/alunos",alunoR)
@@ -74,7 +76,7 @@ export const Cadastro = ( props ) => {
       }  
 
       
-       };
+    };
 
      return (
       <Form onSubmit={cadastrar}>
@@ -92,3 +94,23 @@ export const Cadastro = ( props ) => {
       </Form>
     );
 }
+
+export const Login = ( props ) => {
+   const [ mostrarForm , setMostrarForm ] = React.useState("login")
+  return (
+    <>
+        <ConteinerFoto>
+          <img src={img} alt="foto do senai" />
+        </ConteinerFoto>    
+        <Conteiner>
+          <ConteinerLogin>  
+            <LogoSenai>SENAI OVERFLOW</LogoSenai>
+              <p>Tire a suas duvidas..</p>
+              {mostrarForm === "login" ? <LoginForm mostrarForm={setMostrarForm} /> :  <CadastroForm mostrarForm={setMostrarForm} />}
+          </ConteinerLogin>
+        </Conteiner>
+    </>
+    );
+};
+
+
