@@ -21,9 +21,9 @@ module.exports = {
 			include: 
 			{
 				association :  "Aluno" ,
-				attributes	:   [ "id" , "nome" ] ,
+				attributes	:   [ "id" , "nome"  ] ,
 			} ,
-			attributes	:  ["id","text"], 
+			attributes	:  ["id","text", "created_at"], 
 			order 		:  [["created_at","DESC"]],
 		}
 		);

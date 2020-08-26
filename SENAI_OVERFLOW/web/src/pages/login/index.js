@@ -1,13 +1,19 @@
 import React from 'react';
 import { api } from '../../services/api';
+import { signIn } from '../../services/security'  
 import { Conteiner, ConteinerLogin, LogoSenai, ConteinerFoto } from './style';
 import { Form } from './style';
-import img from '../../assets/img.jpg' 
+import { useHistory } from "react-router-dom";
+import img from '../../assets/img.jpg'; 
+import Alert from '../../components/Alert/index';
+
 const LoginForm = ( props ) => {
     const [ aluno , setAluno ] = React.useState({
       email:"",
       senha:""
     });
+
+    let history = useHistory();
 
    const handlerInput = ( e ) => {
       setAluno( { ...aluno , [e.target.id] : e.target.value   } );
@@ -20,14 +26,15 @@ const LoginForm = ( props ) => {
       const res = await api.post("/sessao",aluno)
         
         if ( res.status === 201 ){
-          window.alert("logado com sucesso!!");
+          signIn(res.data);
+          return history.push("/home");
         }
       } catch(err){
          console.log(err);
-         if( err.response ){
-           return window.alert(err.response.data.erro)  
-         }
-         window.alert("Deu ruim meu pARCEIR")
+        if( err.response ){
+            return (<Alert text={err.response.data.erro} /> )           
+        }
+        return (<Alert text="Você esqueceu de colocar o back-end pra rodar" /> );
       }
     };
 
@@ -65,14 +72,14 @@ const CadastroForm = ( props ) => {
         const res = await api.post("/alunos",alunoR)
         
         if ( res.status === 201 ){
-          window.alert("logado com sucesso!!");
+          console.log("logado com sucesso!!");
         }
       } catch(err){
          console.log(err);
          if( err.response ){
-           return window.alert(err.response.data.erro)  
+           return (<Alert text={err.response.data.erro} /> )  
          }
-         window.alert("Deu ruim meu pARCEIR")
+         return (<Alert text="Você esqueceu de colocar o back-end pra rodar" /> );
       }  
 
       

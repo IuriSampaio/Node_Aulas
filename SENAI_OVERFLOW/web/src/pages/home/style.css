@@ -93,6 +93,7 @@
 	height: 100%;
 	margin-top: 10px;
 	display: flex;
+	flex-direction: column;
 	background-color: var(--cor-fundo);
 }
 
@@ -101,6 +102,7 @@
 	font-family: 'Roboto', sans-serif;
 	border-radius: 10px;
 	padding: 10px;
+	background-color: #000000;
 	margin: 20px auto;
 	color:var(--text-in-input);
 }
@@ -146,9 +148,31 @@
 .card-post footer h5{
 	margin: 10px;
 	font-size: 22px;
+
+	cursor: pointer;
+	transition: 0.2s;
+}
+.card-post footer .beFirst{
+	padding: 20px;
+}
+.card-post footer h5:hover{
+	color:var(--strong-hover);
 }
 .conteinerComentarios>p{
 	text-align: left;
 	margin: 20px 20px 30px 30px;
 	padding-bottom:20px; 
+}
+.conteinerBtnSair{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btnSair{
+	width: 150px;
+	height: 10px;
+	margin:0; 
+	font-size: 24px;
+	display: flex;
+	justify-content: space-between;
 }

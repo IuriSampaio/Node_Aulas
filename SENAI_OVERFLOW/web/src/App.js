@@ -1,6 +1,5 @@
 import React from 'react';
-//import {Login} from './pages/login/index.js';
-import {Home} from './pages/home/index.js';
+import Routes from './routes';
 import { Conteiner } from './pages/login/style';
 import { GlobalStyle } from './styles/GlobalStyles.js'
 
@@ -9,7 +8,7 @@ function App() {
   return (      
       <Conteiner>
           <GlobalStyle />   
-        <Home /> 
+           <Routes />
       </Conteiner>
   );
 }

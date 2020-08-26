@@ -1,6 +1,99 @@
 import React from 'react';
 import './style.css';
+import { api } from '../../services/api';
+import { FiGithub, FiLogOut } from 'react-icons/fi';
+import { signOut, getAluno } from '../../services/security';
+import { useHistory } from "react-router-dom";
+
+
+function CardPost({post}){
+	const [mostrarComentarios, setMostrarComentarios] = React.useState(false);
+
+	const [ Comentarios, setComentarios ] = React.useState([]);
+
+	const carrgearComentarios = async() => {
+		try{
+			if(!mostrarComentarios){
+				const res = await api.get(`/home/${post.id}/comment`)
+				setComentarios(res.data)
+			}
+			setMostrarComentarios(!mostrarComentarios)
+		}catch(err){
+			console.log(err)
+		}
+	}
+	return(
+					<div className="card-post">
+						<header>
+							<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
+							<strong>{post.Aluno.nome}</strong>
+							<p>em {post.createdAt}</p>
+							<span>{ post.code && (<FiGithub />)}</span>
+						</header>
+						<hr />
+						<body>
+							<h2>{post.title}</h2>
+						
+							<strong>{post.text}</strong>
+
+							<img src={post.photo} alt="foto pergunta"   />
+						</body>
+						<footer>
+							<h5 onClick={carrgearComentarios}>Comentarios:</h5>
+							{mostrarComentarios  && (
+							<section>
+							{Comentarios.length === 0 && (<p className="beFirst">Seja o primeiro a comentar</p>)}
+							{Comentarios.map((c)=>(
+								<div className="conteinerComentarios">
+									<header>
+										<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
+										<strong>{c.Aluno.nome}</strong>
+										<p>em {c.created_at}</p>
+									</header>
+									<hr />
+									<p>{c.text}</p>
+								</div>
+							))}
+							
+						
+							</section>
+								) }
+							
+						</footer>
+					</div>
+		
+		);
+}
+
 export function Home(){
+	const alunoLogado = getAluno();
+	const history = useHistory();
+
+	const [postagens, setPostagens] = React.useState([]);
+	//Usando esse Hook, você diz ao React que o componente precisa fazer algo apenas
+	// depois da renderização. O React ira se lembrar da função que você passou 
+	// (nos referiremos a ele como nosso “efeito”), e chamá-la depois que realizar as
+	// atualizações do DOM. Nesse efeito, mudamos o título do documento, mas podemos
+	// também realizar busca de dados ou chamar alguma API imperativa.
+	React.useEffect(()=>{
+		// a função useEffect não pode ser asincrona, 
+		// portanto deve-se colocar outra função
+		// dentro dela para o caso de haver uma requisição dentro da mesma
+		const carregarPostagens = async() =>{
+			try{
+				const retorno = await api.get('/home');	
+				setPostagens(retorno.data)
+			} catch ( err ) {
+				if(err.response){
+				//	return setMsg(err.response.data.erro)
+				console.error(err);
+				}
+				//setMsg("esqueceu de acender o back")
+			}
+			
+		}
+		carregarPostagens();
+	},[]);
 	return (
 
 		<div className="conteiner">
@@ -10,7 +103,11 @@ export function Home(){
 
 				<div><p>SENAI OVERFLOW</p></div>
 				<div className="conteinerInpSeach"><input type="search" placeholder="Digite sua duvida aqui !!" /></div>
-				<div>3</div>
+				<div className="conteinerBtnSair"> <button className="btnSair" onClick={()=>{
+																					 signOut();
+																					 history.replace("/")
+																					}
+																				}><span>SAIR</span>  <FiLogOut /> </button> </div>
 			</div>
 
 			<div className="content">
@@ -18,62 +115,16 @@ export function Home(){
 				<section className="profile">
 
 					<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
-					<a href="#">Editar foto</a>
+					<a href="">Editar foto</a>
 					<strong>Nome:</strong>
-					<p>Ludovico</p>
-					<strong>Email:</strong>
-					<p>Ludovico@nana.com</p>
+					<p>{alunoLogado.nome}</p>
 					<strong>RA:</strong>
-					<p>123456789</p>
+					<p>{alunoLogado.ra}</p>
 				</section>
 
 				<section className="feed">
-					<div className="card-post">
-						<header>
-							<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
-							<strong>BIG Jaum</strong>
-							<p>em 11/11/2011</p>
-							<span>git icon</span>
-						</header>
-						<hr />
-						<body>
-							<h2>titulo pergunta</h2>
-						
-							<strong>descrição texto pergunta</strong>
-
-							<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fnews.psu.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fthreshold-992%2Fpublic%2Fprogramming-language-600x400.jpg%3Fitok%3DsMvbIqA0&f=1&nofb=1" alt="foto pergunta"   />
-						</body>
-						<footer>
-							<h5>Comentarios:</h5>
-							<div className="conteinerComentarios">
-								<header>
-									<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
-									<strong>BIG Jaum</strong>
-									<p>em 11/11/2011 ás 11h</p>
-								</header>
-								<hr />
-								<p>texto do comentario</p>
-							</div>
-							<div className="conteinerComentarios">
-								<header>
-									<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
-									<strong>BIG Jaum</strong>
-									<p>em 11/11/2011 ás 11h</p>
-								</header>
-								<hr />
-								<p>texto do comentario</p>
-							</div>
-							<div className="conteinerComentarios">
-								<header>
-									<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
-									<strong>BIG Jaum</strong>
-									<p>em 11/11/2011 ás 11h</p>
-								</header>
-								<hr />
-								<p>texto do comentario</p>
-							</div>
-						</footer>
-					</div>
+					{postagens.map( ( post ) => ( <CardPost post={post}/> ) ) }
+					
 				</section>
 
 				<section className="nada"></section>
