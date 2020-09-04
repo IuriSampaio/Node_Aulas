@@ -3,8 +3,15 @@ const express = require('express')
 // instanciando o express com o módulo de rotas 
 const routes = express.Router()
 
+const multer = require('multer');
+
+const Multer = multer({
+	storage : multer.memoryStorage(),
+	limits  : 1024*1024,
+});
 // instanciando o obj retornado pelo arquivo que faz contato com o banco
 const alunoController = require('./controllers/aluno');
+const uploadIMG = require("./service/firebase")
 const postController = require('./controllers/post');
 const comentarioController = require('./controllers/comentario');
 const sessaoController = require('./controllers/sessao');
@@ -26,7 +33,7 @@ routes.get("/alunos/:id",alunoController.buscarPorId);
 ///// ROTAS DE POSTAGEM
 routes.get("/home",postController.index);
 routes.get("/home/:id",postController.indexById);
-routes.post("/home",postController.store);
+routes.post("/home", Multer.single("photo"), uploadIMG ,postController.store);
 routes.put("/home/:id",postController.update);
 routes.delete("/home/:id",postController.delete);
 /////////// ROTAS DE COMENTARIOS 

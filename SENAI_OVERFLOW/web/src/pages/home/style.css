@@ -27,8 +27,6 @@
 	text-align: center;
 	border-radius: 10px;
 }
-
-
 .header p{
 	font-size:20px;
 	letter-spacing: 5px;
@@ -41,15 +39,10 @@
     width:100%;
     text-align:center;
 }
-
-
-
 .content{
 	display: grid;
 	grid-template-columns: 20% 60% 20%;
 }
-
-
 .content .profile {
 	display: flex;
 	flex-direction: column;
@@ -62,7 +55,6 @@
 	color:var(--text-in-input);
 	font-family: 'Roboto', sans-serif;
 }
-
 .profile img{
 	width: 100px;
 	width: 100px;
@@ -76,17 +68,12 @@
 
 	margin-top: 20px;
 }
-.profile a{
+.profile label{
 	text-decoration: none;
 	color:var(--text-in-background);
 	width: 100%;
 	text-align: center;
 	margin-top: 5px;
-}
-.nada{
-	border-left: 0.0001px solid var(--text-in-input);
-	width: 100%;
-	background-color: var(--cor-fundo);
 }
 .content .feed{
 	width: 100%;
@@ -106,56 +93,57 @@
 	margin: 20px auto;
 	color:var(--text-in-input);
 }
-.card-post header, .card-post body, .conteinerComentarios{
+.card-post .header-post, .card-post .body-post, .conteinerComentarios{
 		background-color: var(--cor-fundo-post);
 }
-.card-post header img{
+.card-post .header-post img, .conteinerComentarios>header>img{
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
 }
-.card-post header{
+
+.card-post .header-post, .conteinerComentarios>header{
 	padding: 20px;
 	display: flex;
 	align-items: center;
 }
-.card-post header strong{
+.card-post .header-post strong, .conteinerComentarios>header>strong{
 	margin-left: 10px;
 	width: auto;
 	font-size: 20px;
 
 }
-.card-post p , .card-post span{
+.card-post p , .card-post span, .conteinerComentarios>header>span, .conteinerComentarios>header>p{
 	width: auto;
 	margin-left: 10px;
 }
 
-.card-post body{
+.card-post .body-post{
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
 
 }
-.card-post body h2{
+.card-post .body-post h2{
 	font-size:30px;
 	font-weight: 900;
 	margin-bottom: 10px
 }
-.card-post body strong{
+.card-post .body-post strong{
 	font-size: 20px;
 	margin-bottom: 10px;
 }
-.card-post footer h5{
+.card-post .footer-post h5{
 	margin: 10px;
 	font-size: 22px;
 
 	cursor: pointer;
 	transition: 0.2s;
 }
-.card-post footer .beFirst{
+.card-post .footer-post .beFirst{
 	padding: 20px;
 }
-.card-post footer h5:hover{
+.card-post .footer-post h5:hover{
 	color:var(--strong-hover);
 }
 .conteinerComentarios>p{
@@ -175,4 +163,100 @@
 	font-size: 24px;
 	display: flex;
 	justify-content: space-between;
+}
+.actions{
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.actions button{
+	width: 100%;
+	height: 50px;
+	background-color: var(--cor-fundo);
+	color: var(--strong-hover);
+}
+
+.conteinerInputs{
+	width: 70%;
+	height: auto;
+	min-height: 80%;
+	padding: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	background-color: var(--cor-fundo);
+	border-radius: 10px;
+	box-shadow: 10px 10px 200px var(--cor-fundo-post);
+}
+.conteinerInputs>input, .conteinerInputs>textarea{
+	height: 40px;
+	margin: 1%;
+	background-color: var(--cor-fundo);
+	border: solid 2px var(--strong-hover);
+	text-align: left;
+	font-size: 16px;
+	padding: 10px;
+}
+
+.conteinerInputs>label{
+	font-size: 24px;
+	padding: 10px;
+	font-family: 'Alfa Slab One', cursive;
+}
+
+.conteinerInputs span{ color:red; }
+
+.conteinerInputs i{
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 30px;
+	font-weight: bolder;
+	color: white;
+}
+.conteinerInputs i:hover{
+	cursor: pointer;
+	color: red;
+}
+.conteinerInputs>textarea{
+	height: 80px;
+}
+.conteinerInputs>h1{
+	color: var(--text-in-background);
+	font-size:40px;
+	font-weight: 300;
+	letter-spacing: 3px;
+	font-family: 'Alfa Slab One', cursive;
+	width: 100%;
+	text-align: center;
+}
+.conteinerInputs > button{
+	width: 80%;
+	max-width: 100%;
+	height: 80px;
+	transition: 1s;
+	color: var(--text-in-background);
+	font-size: 30px;
+	font-family: 'Alfa Slab One', cursive;
+	background-color: var(--cor-fundo);
+	border:solid 1px var(--text-in-background);
+}
+
+.conteinerInputs > button:hover{
+	width: 85%;
+	background-color:var(--text-in-background);
+	color:var(--cor-fundo);
+	border-radius: 10px; 
+}
+.conteinerInputs>input[type=file]::-webkit-file-upload-button{
+	width: 100%;
+	height: 100%;
+	background-color: var(--cor-fundo);
+	border: transparent;
+	color:var(--strong-hover);
+}
+input[type=file]{
+	display: none;
 }

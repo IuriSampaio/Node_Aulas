@@ -1,6 +1,6 @@
 //importando o express
 const express = require('express')
-
+//importando cors
 const cors = require('cors')
 
 // importando arquivo de rotas 

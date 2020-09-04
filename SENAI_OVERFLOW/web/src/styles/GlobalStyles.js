@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
 :root{
     --cor-fundo     : #2f2f2f;
     --cor-fundo-post: #232323;

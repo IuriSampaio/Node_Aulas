@@ -1,16 +1,28 @@
 import React from 'react';
 import {ConteinerAlert} from './style';
-function Alert(props){
+
+export function Alert(props){
 
 	const { msg, tipo, setMsg } = props;
-	return msg ? (
-		<ConteinerAlert tipo={tipo}>
-			<h1>{msg}</h1>
-			<span onClick={()=>{setMsg(undefined);}}>
-				&times;
-			</span>
-		</ConteinerAlert>
-		) : null;
-};
+	const elmentAlert = React.useRef();
 
-export default Alert;
+	React.useEffect(()=>{
+		if(msg){
+			elmentAlert.current.style.width = "300px";
+		}else{
+			elmentAlert.current.style.width = "0px";
+		}
+	},[msg]);
+
+	return (
+		<ConteinerAlert ref={elmentAlert} tipo={tipo}>
+			<h1>{msg}</h1>
+			{msg && 
+				(<p onClick={ ()=>{ setMsg(undefined); } } >
+					&times;
+				</p>)
+			}
+			
+		</ConteinerAlert>
+		);
+};

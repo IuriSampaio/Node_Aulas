@@ -5,19 +5,18 @@ import { Conteiner, ConteinerLogin, LogoSenai, ConteinerFoto } from './style';
 import { Form } from './style';
 import { useHistory } from "react-router-dom";
 import img from '../../assets/img.jpg'; 
-import Alert from '../../components/Alert/index';
+import { Alert } from '../../components/Alert/index';
 
 const LoginForm = ( props ) => {
     const [ aluno , setAluno ] = React.useState({
       email:"",
       senha:""
     });
-
+    const [setMsg]=React.useState("");
     let history = useHistory();
 
    const handlerInput = ( e ) => {
       setAluno( { ...aluno , [e.target.id] : e.target.value   } );
-      console.log(aluno)
     };
 
    const entrar = async( e ) => {
@@ -26,20 +25,23 @@ const LoginForm = ( props ) => {
       const res = await api.post("/sessao",aluno)
         
         if ( res.status === 201 ){
+          console.log(Alert.msg);
           signIn(res.data);
           return history.push("/home");
         }
       } catch(err){
-         console.log(err);
         if( err.response ){
-            return (<Alert text={err.response.data.erro} /> )           
+          return window.alert(err.response.data.erro);
+          //return setMsg(err.response.data.erro);           
         }
-        return (<Alert text="Você esqueceu de colocar o back-end pra rodar" /> );
-      }
+        //window.alert("coloca o back end pra rodar");
+        return setMsg("coloca o back end pra rodar"); 
+        }
     };
 
     return (
       <Form onSubmit={entrar}>
+      <Alert />
         <input type="email" value={aluno.email} onChange={handlerInput} className="inputLogin" placeholder="digite o seu email..."  id="email"/>
         <input type="password" placeholder="digite sua senha " value={aluno.senha} className="inputLogin" onChange={handlerInput} id="senha" />
         <div className="conteinerBtn">
@@ -54,13 +56,18 @@ const LoginForm = ( props ) => {
 
 
 const CadastroForm = ( props ) => {
-     const [ alunoR , setAlunoR ] = React.useState({
+    
+    const [ alunoR , setAlunoR ] = React.useState({
        ra:"",
        nome:"",
        email:"",
        senha:""
-     });
-
+    });
+    
+    const [setMsg]=React.useState("");
+    
+    let history = useHistory();
+    
     const handlerInput = ( e ) => {
       setAlunoR( { ...alunoR , [e.target.id] : e.target.value   } );
       console.log(alunoR)
@@ -72,14 +79,17 @@ const CadastroForm = ( props ) => {
         const res = await api.post("/alunos",alunoR)
         
         if ( res.status === 201 ){
-          console.log("logado com sucesso!!");
+          signIn(res.data);
+          return history.push("/home");
         }
       } catch(err){
          console.log(err);
          if( err.response ){
-           return (<Alert text={err.response.data.erro} /> )  
+          //window.alert(err.response.data.erro);
+          return setMsg(err.response.data.erro);  
          }
-         return (<Alert text="Você esqueceu de colocar o back-end pra rodar" /> );
+         //window.alert("coloca o back end pra rodar");
+         return setMsg("api não ta ligada babaca");
       }  
 
       
@@ -87,6 +97,7 @@ const CadastroForm = ( props ) => {
 
      return (
       <Form onSubmit={cadastrar}>
+      <Alert />
         <input type="ra" value={alunoR.ra} onChange={handlerInput} className="inputLogin" placeholder="digite o seu ra..."  id="ra"/>
         <input type="nome" placeholder="digite seu nome " value={alunoR.nome} className="inputLogin" onChange={handlerInput} id="nome" />
         

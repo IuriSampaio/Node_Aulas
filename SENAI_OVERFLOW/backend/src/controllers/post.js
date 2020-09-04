@@ -33,7 +33,9 @@ module.exports = {
 
 		const created_aluno_id = req.alunoId;
 
-		const { title, code , photo , text } = req.body;
+		const { title, code , text } = req.body;
+
+		const { firebaseUrl } = req.file ? req.file : "";
 		try{
 			const aluno = await Aluno.findByPk(created_aluno_id);
 
@@ -41,7 +43,7 @@ module.exports = {
 				res.send({erro:"ALUNO NÂO ENCONTRADO"})
 			}
 
-			const post = await Post.create({title, code , photo , text , created_aluno_id });
+			const post = await Post.create({title, code , photo:firebaseUrl , text , created_aluno_id });
 			res.send(post);
 		}catch ( err ) {
 			return res.send({erro:"não foi possivel adicionar a postagem =( "+err});

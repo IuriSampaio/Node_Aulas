@@ -1,6 +1,7 @@
 const Aluno = require("../model/Aluno");
 const {Op}=require("sequelize");
 const cripto = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 //estas seram as açoes controladas pelo banco 
 
 // objeto contendo as açoes possiveis no banco para a contrução da api
@@ -14,7 +15,7 @@ module.exports = {
         // comando executasdo : SELECT * FROM alunos;
         const alunos = await Aluno.findAll();
 
-        res.send(alunos)
+        res.status(201).send(alunos)
     },
 // Buscar no banco pelo id 
     async buscarPorId(req,res){
@@ -30,7 +31,7 @@ module.exports = {
         // o raw nois possiblita extrair e manipular os dados doque agr é o obj aluno  
         delete aluno.senha;
         // mandando o obj aluno
-        res.send(aluno)
+        res.status(201).send(aluno)
     },
 
 // INSERT
@@ -55,8 +56,22 @@ module.exports = {
         //INSERT INTO alunos VALUES (ra,nome,email,senhaw)
         aluno = await Aluno.create({ ra , nome , email , senha:senhaCripto });
 
-        // apenas para teste, sera trocado pela inserção no banco 
-        res.send(aluno)
+        const token = jwt.sign( {alunoId: aluno.id} , "SENAIOVERFLOW" )
+
+        return res.status(201).send(
+            {
+                aluno: {
+                    "alunoid":aluno.id,
+                    "nome":aluno.nome,
+                    "ra":aluno.ra,
+                },
+                
+                "token":token
+            })
+        //res.status(201).send(aluno)
+
+
+
     },
 // UPDATE
     async update( req , res ){
