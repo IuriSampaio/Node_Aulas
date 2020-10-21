@@ -5,6 +5,7 @@ import { FiGithub, FiLogOut } from 'react-icons/fi';
 import { signOut, getAluno } from '../../services/security';
 import { useHistory } from "react-router-dom";
 import PopUp from '../../components/PopUp';
+import moment from 'moment';
 import { Alert } from '../../components/Alert/index';
 
 function CardPost({post}){
@@ -23,27 +24,28 @@ function CardPost({post}){
 			console.log(err)
 		}
 	}
+	const alunoAtual = getAluno();
 		return(
 						<div className="card-post">
 							<div className="header-post">
 								<img alt="foto perfil" src="https://avatars3.githubusercontent.com/u/60737410?s=460&v=4" />
-								<strong>{post.Aluno.nome}</strong>
-								<p>em {post.createdAt}</p>
+								<strong>Por {alunoAtual.alunoid == post.Aluno.id ? "você":post.Aluno.nome}</strong>
+								<p>em {moment(post.createdAt).locale("America/Sao_Paulo").format("DD/MM/YY HH:mm:ss")}</p>
 								<span>{ post.code && (<FiGithub />)}</span>
 							</div>
 							<hr />
 							<section className="body-post">
 								<h2>{post.title}</h2>
 							
-								<strong>{post.text}</strong>
+								{post.text && <strong className="txtcmt">{post.text}</strong>}
 
-								<img src={post.photo} alt="foto pergunta"   />
+								{ post.photo && (<img src={post.photo} alt="foto pergunta"   />)}
 							</section>
 							<section className="footer-post">
 								<h5 onClick={carrgearComentarios}>Comentarios:</h5>
 								{mostrarComentarios  && (
 								<section>
-								{Comentarios.length === 0 && (<p className="beFirst">Seja o primeiro a comentar</p>)}
+								{Comentarios.length === 0 && (<><input placeholder="Seja o primeiro a comentar" /><button >Comentar</button></>)}
 								{Comentarios.map((c)=>(
 									<div key={c.id} className="conteinerComentarios">
 										<header>
@@ -55,6 +57,7 @@ function CardPost({post}){
 										<p>{c.text}</p>
 									</div>
 								))}
+								{Comentarios.length > 0 && (<><input placeholder="faça um comentario" /><button >Comentar</button></>)}
 								
 							
 								</section>
@@ -66,13 +69,17 @@ function CardPost({post}){
 			);
 }
 
-const NewPost = ({ setTheShowNewPost }) => {
+const NewPost = ({ setTheShowNewPost, carregarPostagens, setMsg }) => {
 	const [ NewPost , setNewPost ]= React.useState({
 		titulo: "" ,
 		text  : "" ,
 		code  : ""
 	});
 	
+	const [ image, setImg ] = React.useState(null);
+
+	const imageRef = React.useRef();
+
 	const fechar = ( ) => {
 		const {titulo, text, code} = NewPost;
 
@@ -84,6 +91,36 @@ const NewPost = ({ setTheShowNewPost }) => {
 			setTheShowNewPost(true)
 		}
 	}
+
+	const enviar = ( e ) => {
+		e.preventDefault();
+//		setMsg("enviando");
+		const dados = new FormData();
+
+		dados.append("title", NewPost.titulo);
+		dados.append("text", NewPost.text);
+		dados.append("code", NewPost.code);
+		dados.append("photo", image);
+
+		try{
+			api.post("/home", dados, {
+				headers: {
+				"Content-type":"multipart/form-data"	
+				} 
+			});
+			carregarPostagens();
+			setTheShowNewPost(false);
+			// setMsg("Enviado com sucesso");
+			// setTimeout(()=>{
+			// 	setMsg("");
+			// },3000);
+		}catch(err){
+			console.log(err);
+			setMsg("Deu algum ruim");
+		}
+
+	}
+
 	const handlerInput = ( e ) => {
 		setNewPost(
 			{
@@ -91,9 +128,20 @@ const NewPost = ({ setTheShowNewPost }) => {
 				[e.target.id]  :  e.target.value 
 			});
 	}
+	const handlerImage = ( e ) => {
+		if(e.target.files[0]){	
+			imageRef.current.src = URL.createObjectURL(e.target.files[0]);
+			imageRef.current.style.display="block";
+		}else{
+			imageRef.current.src = "";
+		}
+		setImg(e.target.files[0]);
+	}
+		
 	return (
 		<PopUp>
 			<div className="conteinerInputs" >
+			<form id="NewPost" onSubmit={enviar}>
 				<i onClick={
 					fechar
 				}>&times;</i>
@@ -110,10 +158,11 @@ const NewPost = ({ setTheShowNewPost }) => {
 				<input type="text" id="code"  onChange={handlerInput} placeholder="ex: https://gist.github.com/ClementPinard/e7353dee56faf3f4c62f0753a2703568.js" />
 
 				<label htmlFor="foto">Imagem</label>
-				<input type="file" id="foto" />
-				<img alt="preview imge" />
+				<input type="file" id="foto" onChange={handlerImage} />
+				<img alt="preview imge" ref ={imageRef}/>
 
 				<button>Enviar duvida</button>
+			</form>
 			</div>
 		</PopUp>
 			);
@@ -135,7 +184,11 @@ export function Home(){
 		// a função useEffect não pode ser asincrona, 
 		// portanto deve-se colocar outra função
 		// dentro dela para o caso de haver uma requisição dentro da mesma
-		const carregarPostagens = async() =>{
+		
+		carregarPostagens();
+	},[setMsg]);
+
+	const carregarPostagens = async() =>{
 			try{
 				const retorno = await api.get('/home');	
 				setPostagens(retorno.data)
@@ -148,12 +201,11 @@ export function Home(){
 			}
 			
 		}
-		carregarPostagens();
-	},[setMsg]);
+
 	return (
 
 		<div className="conteiner">
-		{showNewPost  &&  <NewPost setTheShowNewPost={setTheShowNewPost}/> }
+		{showNewPost  &&  <NewPost carregarPostagens={carregarPostagens} setMsg={setMsg} setTheShowNewPost={setTheShowNewPost}/> }
 		<Alert />
 
 			<div className="header">

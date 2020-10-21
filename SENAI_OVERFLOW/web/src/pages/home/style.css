@@ -1,3 +1,19 @@
+body{
+	overflow-x: none;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+	height: 100%;
+  background-color:var(--cor-fundo);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background-color: var(--degrade-fim);
+}
+
 .conteiner{
 	width:100%;
 	height: 100%;
@@ -6,7 +22,7 @@
 	width: 100%;
 	height: 70px;
 
-	background-color: var(--degrade-ini);
+	background-color: #000000;
 
 	display: grid;
 	grid-template-columns: 20% 60% 20%;
@@ -20,7 +36,7 @@
 	width: 95%;
 	height: 65%;
 
-	border:solid 2px white;
+	border:transparent;
 	background-color: var(--degrade-fim);
 	color:var(--text-in-input);
 	font-size: 24px; 
@@ -50,7 +66,6 @@
 	width: 100%;
 	height: 100%;
 	background-color: var(--cor-fundo);
-	border-right: solid 2px var(--text-in-input);
 	margin-top: 10px;
 	color:var(--text-in-input);
 	font-family: 'Roboto', sans-serif;
@@ -140,6 +155,12 @@
 	cursor: pointer;
 	transition: 0.2s;
 }
+
+
+.card-post img{
+	box-shadow: border-box;
+	max-height: 300px;
+}
 .card-post .footer-post .beFirst{
 	padding: 20px;
 }
@@ -151,6 +172,14 @@
 	margin: 20px 20px 30px 30px;
 	padding-bottom:20px; 
 }
+.txtcmt{
+	width: 96.5%;
+	background-color: #000;
+	border-left: white solid 3px;
+	padding: 10px;
+	color: white;
+	text-align: left;
+}
 .conteinerBtnSair{
 	display: flex;
 	justify-content: center;
@@ -158,26 +187,40 @@
 }
 .btnSair{
 	width: 150px;
+	background-color: #000000;
+	color:var(--strong-hover);
 	height: 10px;
 	margin:0; 
+	border: none;
 	font-size: 24px;
 	display: flex;
 	justify-content: space-between;
 }
+.btnSair:hover{
+	color:#000;
+}
 .actions{
-	padding: 10px;
 	display: flex;
+	height: 100%;
+	padding-bottom: 10px;
+	background-color: var(--cor-fundo);
 	flex-direction: column;
 	align-items: center;
+
 }
 .actions button{
-	width: 100%;
+	width: 80%;
 	height: 50px;
 	background-color: var(--cor-fundo);
+	border: solid 1px var(--strong-hover);
+	border-radius: 0px;
 	color: var(--strong-hover);
 }
+.actions button:hover{
+	color:var(--cor-fundo);
 
-.conteinerInputs{
+}
+.conteinerInputs, form{
 	width: 70%;
 	height: auto;
 	min-height: 80%;
@@ -188,9 +231,10 @@
 	margin: auto;
 	background-color: var(--cor-fundo);
 	border-radius: 10px;
-	box-shadow: 10px 10px 200px var(--cor-fundo-post);
+	
 }
-.conteinerInputs>input, .conteinerInputs>textarea{
+form{width: 100%;	box-shadow: 20px 30px 200px var(--cor-fundo-post);}
+.conteinerInputs input, .conteinerInputs textarea{
 	height: 40px;
 	margin: 1%;
 	background-color: var(--cor-fundo);
@@ -200,7 +244,7 @@
 	padding: 10px;
 }
 
-.conteinerInputs>label{
+.conteinerInputs label{
 	font-size: 24px;
 	padding: 10px;
 	font-family: 'Alfa Slab One', cursive;
@@ -220,10 +264,10 @@
 	cursor: pointer;
 	color: red;
 }
-.conteinerInputs>textarea{
+.conteinerInputs textarea{
 	height: 80px;
 }
-.conteinerInputs>h1{
+.conteinerInputs h1{
 	color: var(--text-in-background);
 	font-size:40px;
 	font-weight: 300;
@@ -232,7 +276,7 @@
 	width: 100%;
 	text-align: center;
 }
-.conteinerInputs > button{
+.conteinerInputs button{
 	width: 80%;
 	max-width: 100%;
 	height: 80px;
@@ -244,13 +288,13 @@
 	border:solid 1px var(--text-in-background);
 }
 
-.conteinerInputs > button:hover{
+.conteinerInputs button:hover{
 	width: 85%;
 	background-color:var(--text-in-background);
 	color:var(--cor-fundo);
 	border-radius: 10px; 
 }
-.conteinerInputs>input[type=file]::-webkit-file-upload-button{
+.conteinerInputs input[type=file]::-webkit-file-upload-button{
 	width: 100%;
 	height: 100%;
 	background-color: var(--cor-fundo);
@@ -259,4 +303,35 @@
 }
 input[type=file]{
 	display: none;
+}
+.conteinerInputs img{
+	width:200px;
+	height: 200px;
+
+	display: none;
+}
+form label[for=foto]:hover{
+	color:var(--strong-hover);
+	cursor:pointer;
+	letter-spacing: 0.6px;
+	font-weight: 500;
+	transition: 2s;
+}
+.footer-post input{
+	width: 80%;
+	height: 34px;
+	float: left;
+	border-radius: 10px;
+	padding: 3px;
+}
+.footer-post button{
+	float: right;
+	width: 17%;
+	background-color: #000;
+	color:var(--text-in-background);
+	border: none;
+	height: 30px;
+	font-size: 20px;
+	margin-top: 10px;
+	margin-top: 0px;
 }
